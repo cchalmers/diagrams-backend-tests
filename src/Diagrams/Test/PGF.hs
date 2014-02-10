@@ -11,11 +11,14 @@ pgfTester :: (String, Test -> IO Html)
 pgfTester =
   ( "pgf"
   , \ (Test nm dig) -> do
-      renderPGF (name nm "tex") (Dims 200 200) plaintexStandaloneSurface dig
-      rawSystem "pdftex" ["--output-directory", "pgf", name nm "tex"]
-      -- rawSystem "echo" ["--output-directory", "pgf", name nm "tex"]
+      renderPDF (name nm "pdf") (Dims 200 200)
+        -- latexStandaloneSurface
+        -- contextStandaloneSurface 
+        plaintexStandaloneSurface
+        dig
       rawSystem "convert" [name nm "pdf", name nm "png"]
       return $ H.image ! [ src (name nm "png") ]
+      -- is it possible to put all three next to each other?
   )
  where
   name nm ext = prefix </> nm <.> ext
