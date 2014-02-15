@@ -12,9 +12,9 @@ pgfTester =
   ( "pgf"
   , \ (Test nm dig) -> do
       renderPDF (name nm "pdf") (Dims 200 200)
-        -- latexStandaloneSurface
-        -- contextStandaloneSurface 
-        plaintexStandaloneSurface
+        -- latexSurface
+        -- contextSurface 
+        plaintexSurface -- {_command = "/Users/christopher/Desktop/texlive/2013/bin/x86_64-darwin/pdftex"}
         dig
       rawSystem "convert" [name nm "pdf", name nm "png"]
       return $ H.image ! [ src (name nm "png") ]
