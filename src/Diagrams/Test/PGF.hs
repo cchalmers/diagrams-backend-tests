@@ -10,16 +10,16 @@ import Text.Html as H hiding ((</>))
 pgfTester :: (String, Test -> IO Html)
 pgfTester =
   ( "pgf"
-  , \ (Test nm dig) -> do
-      renderPDF (name nm "pdf") (Dims 200 200)
-        -- latexSurface
+  , \ (Test nm d) -> do
+      renderPGF (name nm "pdf") (Dims 200 200)
+        latexSurface
         -- contextSurface 
-        plaintexSurface -- {_command = "/Users/christopher/Desktop/texlive/2013/bin/x86_64-darwin/pdftex"}
-        dig
+        -- plaintexSurface
+        d
       rawSystem "convert" [name nm "pdf", name nm "png"]
       return $ H.image ! [ src (name nm "png") ]
       -- is it possible to put all three next to each other?
   )
  where
-  name nm ext = prefix </> nm <.> ext
-  prefix = "pgf"
+  name nm ext = "pgf" </> nm <.> ext
+
